@@ -1,19 +1,17 @@
 import * as React from 'react';
 
 import { StyleSheet, View, Text } from 'react-native';
-import Announcement from 'react-native-announcement';
+import { Announcement } from '../..';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 export default function App() {
-  const [result, setResult] = React.useState<number | undefined>();
-
-  React.useEffect(() => {
-    Announcement.multiply(3, 7).then(setResult);
-  }, []);
-
   return (
-    <View style={styles.container}>
-      <Text>Result: {result}</Text>
-    </View>
+    <SafeAreaProvider>
+      <View style={styles.container}>
+        <Announcement />
+        <Text>Sample of Announcement</Text>
+      </View>
+    </SafeAreaProvider>
   );
 }
 
