@@ -11,15 +11,7 @@ import {
   ListRenderItem,
   Image,
 } from 'react-native';
-import {
-  SafeAreaProvider,
-  useSafeAreaInsets,
-} from 'react-native-safe-area-context';
-// import StringifyAsyncStorage from '../utils/StringifyAsyncStorage';
-// import { useNavigation } from '@react-navigation/core';
 
-// const TAG = 'OnBoarding';
-// const ANNOUNCEMENT_STORAGE_KEY = '@storage:onBoarding';
 const { width, height } = Dimensions.get('window');
 const TOTAL_MARGIN_HORIZONTAL = 44;
 const ON_BOARDING_WIDTH = width - TOTAL_MARGIN_HORIZONTAL;
@@ -35,20 +27,66 @@ const DATA = [
   {
     id: 1,
     image: require('../assets/laptop.png'),
-    title: 'Explore our new experience',
+    title: 'Stay organized',
     description:
-      'Discover diverse locations, properties and content in a seamless, intuitive way.',
+      'Get an overview of how you are performing and motivate yourself to achieve even more',
   },
   {
     id: 2,
-    image: require('../assets/coffee.png'),
-    title: 'Personalise your property journey',
+    image: require('../assets/travel.png'),
+    title: 'Personalise your journey',
     description:
-      'Find your dream home with personalised location based on your preferences.',
+      'Create unique emotional story that describes your work better than words',
+  },
+  {
+    id: 3,
+    image: require('../assets/launch.png'),
+    title: 'Share your work',
+    description:
+      'Find new opportunities to make your voice heard. Be loud and proud!',
   },
 ];
 
-export const Announcement: React.FC = () => {
+type ScrollIndicatorProps = {
+  scrollX: Animated.Value;
+};
+
+const ScrollIndicator = ({ scrollX }: ScrollIndicatorProps) => {
+  return (
+    <View style={styles.rowCentered}>
+      {DATA.map((_, index) => {
+        const inputRange = [
+          (index - 1) * ON_BOARDING_WIDTH,
+          index * ON_BOARDING_WIDTH,
+          (index + 1) * ON_BOARDING_WIDTH,
+        ];
+
+        const backgroundColor = scrollX.interpolate({
+          inputRange,
+          outputRange: ['#D2D5DA', '#697684', '#D2D5DA'],
+          extrapolate: 'clamp',
+        });
+
+        return (
+          <Animated.View
+            key={`indicator-${index}`}
+            style={[styles.indicator, { backgroundColor: backgroundColor }]}
+          />
+        );
+      })}
+    </View>
+  );
+};
+
+type AnnouncementProps = {
+  visible: boolean;
+  handleDoneButtonOnPressed: () => void;
+};
+
+export const Announcement = ({
+  visible,
+  handleDoneButtonOnPressed,
+}: AnnouncementProps) => {
   const scrollX = React.useRef(new Animated.Value(0)).current;
   const [currentIndex, setCurrentIndex] = useState(
     Math.min(0, DATA.length - 1)
@@ -56,8 +94,6 @@ export const Announcement: React.FC = () => {
   const [currentOffset, setCurrentOffset] = useState(
     currentIndex * ON_BOARDING_WIDTH
   );
-  // const [visible, setVisible] = useState(false);
-  const insets = useSafeAreaInsets();
 
   const flatListRef = useRef<FlatList>(null);
 
@@ -93,10 +129,7 @@ export const Announcement: React.FC = () => {
     const nextIndex = index + 1;
 
     if (index === DATA.length - 1) {
-      // StringifyAsyncStorage.setItem(ANNOUNCEMENT_STORAGE_KEY, true).then(() => {
-      //   setVisible(false);
-      //   // navigation.navigate('Home');
-      // });
+      handleDoneButtonOnPressed();
     } else {
       flatListRef?.current?.scrollToIndex({ animated: true, index: nextIndex });
 
@@ -115,7 +148,11 @@ export const Announcement: React.FC = () => {
     return (
       <View style={styles.content}>
         <View style={styles.topContent}>
-          <Image style={styles.image} source={item.image} />
+          <Image
+            style={styles.image}
+            resizeMode={'contain'}
+            source={item.image}
+          />
           <Text style={styles.title}>{item.title}</Text>
           <Text style={styles.description}>{item.description}</Text>
         </View>
@@ -136,35 +173,29 @@ export const Announcement: React.FC = () => {
   const renderItem: ListRenderItem<Data> = ({ item, index }) => {
     return <Item item={item} index={index} />;
   };
-  // React.useEffect(() => {
-  //   StringifyAsyncStorage.getItem(ANNOUNCEMENT_STORAGE_KEY).then((value) => {
-  //     setVisible(!value);
-  //   });
-  // }, []);
 
   return (
-    <SafeAreaProvider>
-      <Modal transparent={true} visible={true}>
-        <View style={styles.dimBackground} />
-        <View style={styles.absoluteCenter}>
-          <View style={[styles.container, { maxHeight: height - insets.top }]}>
-            <Animated.FlatList
-              ref={flatListRef}
-              data={DATA}
-              keyExtractor={(item: any) => `announcement-${item.id}`}
-              horizontal={true}
-              showsHorizontalScrollIndicator={false}
-              pagingEnabled={true}
-              scrollEventThrottle={16}
-              bounces={false}
-              onScroll={animatedEvent}
-              onMomentumScrollEnd={onScrollEnd}
-              renderItem={renderItem}
-            />
-          </View>
+    <Modal transparent={true} visible={visible}>
+      <View style={styles.dimBackground} />
+      <View style={styles.absoluteCenter}>
+        <View style={[styles.container, { maxHeight: height - 50 }]}>
+          <Animated.FlatList
+            ref={flatListRef}
+            data={DATA}
+            keyExtractor={(item: any) => `announcement-${item.id}`}
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+            pagingEnabled={true}
+            scrollEventThrottle={16}
+            bounces={false}
+            onScroll={animatedEvent}
+            onMomentumScrollEnd={onScrollEnd}
+            renderItem={renderItem}
+          />
+          <ScrollIndicator scrollX={scrollX} />
         </View>
-      </Modal>
-    </SafeAreaProvider>
+      </View>
+    </Modal>
   );
 };
 
@@ -198,8 +229,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 32,
   },
   image: {
-    width: 100,
-    height: 100,
+    width: width - 96,
     alignSelf: 'center',
   },
   title: {
@@ -217,7 +247,7 @@ const styles = StyleSheet.create({
     color: '#697684',
   },
   pressable: {
-    backgroundColor: 'blue',
+    backgroundColor: '#64B5F6',
     marginTop: 22,
     alignItems: 'center',
     borderRadius: 3,

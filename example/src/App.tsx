@@ -2,16 +2,32 @@ import * as React from 'react';
 
 import { StyleSheet, View, Text } from 'react-native';
 import { Announcement } from '../..';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 export default function App() {
+  const [announcementVisible, setAnnouncementVisible] = React.useState(false);
+
+  React.useEffect(() => {
+    setAnnouncementVisible(true);
+    // StringifyAsyncStorage.getItem(ANNOUNCEMENT_STORAGE_KEY).then((value) => {
+    // });
+  }, []);
+
+  const handleDoneButtonOnPressed = () => {
+    setAnnouncementVisible(false);
+    // StringifyAsyncStorage.setItem(ANNOUNCEMENT_STORAGE_KEY, true).then(() => {
+    // });
+  };
+
   return (
-    <SafeAreaProvider>
-      <View style={styles.container}>
-        <Announcement />
-        <Text>Sample of Announcement</Text>
-      </View>
-    </SafeAreaProvider>
+    <View style={styles.container}>
+      {announcementVisible && (
+        <Announcement
+          visible={announcementVisible}
+          handleDoneButtonOnPressed={handleDoneButtonOnPressed}
+        />
+      )}
+      <Text>Sample of Announcement</Text>
+    </View>
   );
 }
 

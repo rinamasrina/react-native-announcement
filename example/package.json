@@ -6,7 +6,8 @@
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
-    "start": "react-native start"
+    "start": "react-native start",
+    "clean:all": "watchman watch-del-all && rm -rf node_modules && rm -rf $TMPDIR/haste-map-* && rm -rf $TMPDIR/metro-* && rm -rf $TMPDIR/react-*"
   },
   "dependencies": {
     "react": "16.13.1",
