@@ -1,6 +1,6 @@
 {
   "name": "react-native-announcement",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "A simple component to display what's new feature in your app",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -36,13 +36,13 @@
     "ios",
     "android"
   ],
-  "repository": "https://github.com/rinamasrina/react-native-announcement/react-native-announcement",
-  "author": "Masrina <mas.iosdev@gmail.com> (https://github.com/rinamasrina/react-native-announcement)",
+  "repository": "https://github.com/rinamasrina/react-native-announcement",
+  "author": "Masrina <mas.iosdev@gmail.com> (https://github.com/rinamasrina)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/rinamasrina/react-native-announcement/react-native-announcement/issues"
+    "url": "https://github.com/rinamasrina/react-native-announcement/issues"
   },
-  "homepage": "https://github.com/rinamasrina/react-native-announcement/react-native-announcement#readme",
+  "homepage": "https://github.com/rinamasrina/react-native-announcement",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
