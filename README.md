@@ -35,14 +35,14 @@ Others are optional.
 
 | Props        | type           | Description  |
 | ------------- |-------------| ----- |
-| **`visible`** | boolean | a boolean to show or hide the modal screen |
-| **`handleDoneButtonOnPressed`** | void      |   a function to perform after user click `Done` or a button at the last screen |
-| **`features`** | array of [Feature](https://github.com/rinamasrina/react-native-announcement/blob/main/src/types/Feature.ts)     |    list of features that you want to show. It includes image, title, and description |
-| **`titleStyle`** | TextStyle | text style for title |
-| **`descriptionStyle`** | TextStyle | text style for title |
-| **`buttonStyle`**  | ViewStyle | style for button at the bottom |
-| **`continueButtonTitle`** | string      |   title for the first to n-1 in the screen. Default is `Next` |
-| **`lastIndexButtonTitle`** | string      |    title for the last button in the screen. Default is `Start` |
+| **visible** | boolean | A boolean to show or hide the modal screen |
+| **handleDoneButtonOnPressed** | void      |   A function to perform after user click `Done` or a button at the last screen |
+| **features** | array of [Feature](https://github.com/rinamasrina/react-native-announcement/blob/main/src/types/Feature.ts)     |    List of features that you want to show. It includes image, title, and description |
+| **titleStyle** | object | Text style for title |
+| **descriptionStyle** | object | Text style for description |
+| **buttonStyle**  | object | Style for button at the bottom |
+| **continueButtonTitle** | string      |   Title for the first to n-1 button in the screen. Default is `Next` |
+| **lastIndexButtonTitle** | string      |    Title for the last button in the screen. Default is `Start` |
 
 ## Usage
 1. create your `Feature` array object.
@@ -66,7 +66,7 @@ import Announcement from "react-native-announcement";
 
 // ...
 export default function App() {
-  reutrn (
+  return (
      <Announcement
         visible={true}
         handleDoneButtonOnPressed={handleDoneButtonOnPressed}
