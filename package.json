@@ -1,6 +1,6 @@
 {
   "name": "react-native-announcement",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A simple component to display what's new feature in your app",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
